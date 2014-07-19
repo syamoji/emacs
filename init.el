@@ -1,4 +1,4 @@
-;;; テーマの設定
+;;; init. el
 (load-theme 'misterioso t)
 
 ;; auto-complete
@@ -12,6 +12,10 @@
 ;; anzu
 ;; 検索時、(1/20)のように個数と何番目かを表示
 (global-anzu-mode t)
+
+;; magit
+;; git クライアント
+(require 'magit)
 
 ;; powerline
 ;; ステータスバーの見た目をかっちょよくする
