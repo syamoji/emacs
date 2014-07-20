@@ -17,6 +17,12 @@
 ;; git クライアント
 (require 'magit)
 
+;; 画面移動
+(global-set-key (kbd "C-c C-b") 'windmove-left)
+(global-set-key (kbd "C-c C-n") 'windmove-down)
+(global-set-key (kbd "C-c C-p") 'windmove-up)
+(global-set-key (kbd "C-c C-f") 'windmove-right)
+
 ;; powerline
 ;; ステータスバーの見た目をかっちょよくする
 (require 'powerline)
@@ -27,6 +33,8 @@
 (require 'rainbow-delimiters)
 (global-rainbow-delimiters-mode t)
 
+;; 対応するカッコをハイライト
+(show-paren-mode t)
 
 ;; melpa
 ;; パッケージインストール用サイト
