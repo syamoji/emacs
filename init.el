@@ -1,5 +1,15 @@
 ;;; init. el
-(load-theme 'misterioso t)
+;(load-theme 'misterioso t)
+(load-theme 'zenburn t)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
+
 
 ;; auto-complete
 ;; 補完自動表示
@@ -11,7 +21,14 @@
 
 ;; anzu
 ;; 検索時、(1/20)のように個数と何番目かを表示
-(global-anzu-mode t)
+(global-anzu-mode +1)
+
+;; smooth-scroll
+;; スクロールをスムーズにしてくれる
+;(require 'smooth-scroll)
+;(smooth-scroll-mode t)
+
+
 
 ;; magit
 ;; git クライアント
@@ -38,14 +55,13 @@
 
 ;; melpa
 ;; パッケージインストール用サイト
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize)
 
+;; emacs-nav
+;; 左にナビゲーション追加
+(add-to-list 'load-path "~/.emacs.d/emacs-nav")
+(require 'nav)
+(global-set-key (kbd "C-x C-d") 'nav-toggle)
+(custom-set-variables '(nav-width 12))
 
 ;; flycheck
 ;; 静的構文解釈
@@ -55,6 +71,25 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 ;(add-hook 'ruby-mode-hook 'flycheck-mode)
 
+
+;; migemo
+;; 日本語でも検索
+(add-to-list 'load-path "/Users/takuji/.emacs.d/cmigemo")
+;(require 'migemo)
+(setq migemo-dictionary "/Users/takuji/.emacs.d/cmigemo/dict/utf-8.d/migemo-dict")
+(setq migemo-command "/usr/local/bin/cmigemo")
+(setq migemo-options '("-q" "--emacs"))
+(setq migemo-user-dictionary nil)
+(setq migemo-coding-system 'utf-8)
+(setq migemo-regex-dictionary nil)
+(load-library "migemo")
+(migemo-init)
+
+
+
+
+;; タイトルバーにファイル名を表示
+(setq frame-title-format (format "%%f - emacs@%s " (system-name)))
 
 ;; helmの設定（anything後継）
 (add-to-list 'load-path "~/.emacs.d/helm")
@@ -72,15 +107,15 @@
 
 ;; gtags
 ;; タグ付けにより、ソースコードを行ったり来たり
-(require 'helm-gtags)
-(add-hook 'c-mode-hook 'helm-gtags-mode)
+;(require 'helm-gtags)
+;(add-hook 'c-mode-hook 'helm-gtags-mode)
 ;; key bindings
-(add-hook 'helm-gtags-mode-hook
-         '(lambda ()
-             (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
-             (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
-             (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
-             (local-set-key (kbd "C-t") 'helm-gtags-pop-stack)))
+;(add-hook 'helm-gtags-mode-hook
+;         '(lambda ()
+;             (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
+;             (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
+;             (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
+;             (local-set-key (kbd "C-t") 'helm-gtags-pop-stack)))
 
 ;; 行数の表示
 ;; 行数のハイライト
@@ -88,6 +123,15 @@
 (require 'hlinum)
 (global-linum-mode t)
 (hlinum-activate)
+(global-hl-line-mode)
+(setq linum-format "%4d")
+(setq linum-delay t)
+
+;; undo-tree
+;; 編集履歴の見える化
+(require 'undo-tree)
+(global-undo-tree-mode t)
+(global-set-key (kbd "C-_") 'undo-tree-redo)
 
 ;; auto-installの設定
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install/"))
