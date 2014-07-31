@@ -1,5 +1,6 @@
 ;;; init. el
 ;(load-theme 'misterioso t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elpa/zenburn-theme-20140613.207")
 (load-theme 'zenburn t)
 
 (require 'package)
@@ -28,8 +29,6 @@
 ;(require 'smooth-scroll)
 ;(smooth-scroll-mode t)
 
-
-
 ;; magit
 ;; git クライアント
 (require 'magit)
@@ -44,6 +43,14 @@
 ;; ステータスバーの見た目をかっちょよくする
 (require 'powerline)
 (powerline-default-theme)
+
+;; diminish
+;; ステータスバー表示をカスタマイズ
+(require 'diminish)
+(diminish 'anzu-mode)
+(diminish 'undo-tree-mode)
+(diminish 'auto-complete-mode)
+(diminish 'smartparens-mode)
 
 ;; rainbow delimiters
 ;; 対応するカッコを色付けし見やすくする
@@ -107,15 +114,15 @@
 
 ;; gtags
 ;; タグ付けにより、ソースコードを行ったり来たり
-;(require 'helm-gtags)
-;(add-hook 'c-mode-hook 'helm-gtags-mode)
+(require 'helm-gtags)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
 ;; key bindings
-;(add-hook 'helm-gtags-mode-hook
-;         '(lambda ()
-;             (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
-;             (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
-;             (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
-;             (local-set-key (kbd "C-t") 'helm-gtags-pop-stack)))
+(add-hook 'helm-gtags-mode-hook
+         '(lambda ()
+             (local-set-key (kbd "M-t") 'helm-gtags-find-tag)
+             (local-set-key (kbd "M-r") 'helm-gtags-find-rtag)
+             (local-set-key (kbd "M-s") 'helm-gtags-find-symbol)
+             (local-set-key (kbd "C-t") 'helm-gtags-pop-stack)))
 
 ;; 行数の表示
 ;; 行数のハイライト
@@ -175,8 +182,6 @@
 
 
 ;(require 'elscreen)
-;(require 'migemo)
-
 
 ;; バックアップファイルを以下の場所に作成
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
